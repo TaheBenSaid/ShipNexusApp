@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shipnexusapp/core/ui/colors/colors.dart';
+import 'package:shipnexusapp/features/auth/presentation/pages/signin_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -91,44 +92,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           curve: Curves.ease,
                         );
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 156.w,
-                        height: 51.h,
-                        decoration: ShapeDecoration(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x7FFF6347),
-                              blurRadius: 10,
-                              offset: Offset(0, 3),
-                              spreadRadius: 0,
-                            )
-                          ],
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 156.w,
+                          height: 51.h,
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+                            shadows: [
+                              BoxShadow(
+                                color: Color(0x7FFF6347),
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                                spreadRadius: 0,
+                              )
+                            ],
 
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Get Start!',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF1474C2),
-                                fontSize: 17,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Get Start!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF1474C2),
+                                  fontSize: 17,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 10.w),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Color(0xFF1474C2),
-                            ),
-                          ],
-                        ) ,
+                              SizedBox(width: 10.w),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF1474C2),
+                              ),
+                            ],
+                          ) ,
+                        ),
                       )
                     ),
                   ],
