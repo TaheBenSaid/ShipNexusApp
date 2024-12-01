@@ -93,3 +93,10 @@ String? validateEmail(String? value, BuildContext context) {
       ? "Enter a valid email address"
       : null;
 }
+
+String? validateEmptyField(String value, hintText, BuildContext context) {
+  if (value.trim().isEmpty) {
+    return "$hintText ${"can't be blank"}";
+  }
+  return null;
+}
