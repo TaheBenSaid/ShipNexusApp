@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shipnexusapp/injection.dart';
 
 import 'core/app_theme.dart';
-import 'features/auth/presentation/pages/splash_screen.dart';
+import 'features/auth/presentation/pages/second_signup_screen.dart';
+import 'features/auth/presentation/pages/signup_screen.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await configureDependencies();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -14,8 +22,8 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: appTheme,
-        home: SplashScreen(),
+         theme: appTheme,
+        home: SecondSignUpScreen(),
       ),
     );
   }
