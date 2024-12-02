@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../features/map_feature/presentation/pages/map_page.dart';
 import '../validations/input_validations.dart';
 
 class MapInput extends StatefulWidget {
