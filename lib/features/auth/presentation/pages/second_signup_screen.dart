@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:shipnexusapp/core/ui/colors/colors.dart';
 import 'package:shipnexusapp/features/auth/presentation/pages/signin_screen.dart';
 
-import '../../../../core/ui/custom_text_field.dart';
 import '../../../../core/validations/input_validations.dart';
+import '../../../../core/widgets/map_input.dart';
+import '../../../map_feature/presentation/pages/map_page.dart';
+import '../widgets/refactored_intl_phone_field.dart';
 
 class SecondSignUpScreen extends StatefulWidget {
   const SecondSignUpScreen({Key? key}) : super(key: key);
@@ -20,9 +24,10 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  String completePhoneNumber = ''; // New variable for complete phone number
+  final TextEditingController locationController = TextEditingController();
+
   bool _isChecked = false;
 
   @override
@@ -114,7 +119,8 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                                     ),
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -149,43 +155,108 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                             key: _formKey,
                             child: Column(
                               children: [
-                                // Name Text Field...
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 21.0.h),
-                                  child: CustomTextField(
-                                    controller: _nameController,
-                                    isPassword: false,
-                                    placeholder: "Name",
-                                    width: double.infinity,
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    isNumeric: false,
-                                    validator: (value) =>
-                                        validateName(value!, context),
-                                  ),
+                                // Location Text Field...
+                                MapInput(
+                                  initialLatitude: 0.0,
+                                  initialLongitude: 0.0,
+                                  updateLocation: (locationName, lat, lng) {
+                                    setState(() {
+                                      // update the user location...
+                                      locationController.text = locationName;
+
+                                    });
+                                  },
+                                  locationController: locationController,
                                 ),
-                                // Email Text Field...
-                                Container(
-                                  margin: EdgeInsets.only(bottom: 21.0.h),
-                                  child: CustomTextField(
-                                    controller: _emailController,
-                                    isPassword: false,
-                                    placeholder: "Email",
-                                    width: double.infinity,
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14.sp,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    isNumeric: false,
-                                    validator: (value) =>
-                                        validateEmail(value!, context),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                // Phone Number Text Field...
+                                IntlPhoneField(
+                                  pickerDialogStyle: PickerDialogStyle(
+                                      searchFieldInputDecoration:
+                                          InputDecoration(
+                                              hintText: 'Search country')),
+                                  invalidNumberMessage:
+                                      'Please enter mobile number',
+                                  invalidNumberLength:
+                                      'Please enter valid mobile number',
+                                  keyboardType: TextInputType.phone,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  validator: (value) =>
+                                      validatePhoneNumber(value!, context),
+                                  languageCode: "fr",
+                                  dropdownTextStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
                                   ),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  controller: _phoneNumberController,
+                                  decoration: InputDecoration(
+                                    counterStyle:
+                                        TextStyle(color: Colors.white),
+                                    errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          ScreenUtil().radius(12)),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffF04438),
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1,
+                                        color: Color(0xFFCACACA),
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    errorStyle: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 12.sp,
+                                      fontFamily: 'Outfit',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                    labelText: 'Phone number',
+                                    labelStyle: TextStyle(
+                                      color: Color(0xFFCACACA),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFCACACA),
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1,
+                                        color: Color(0xFFCACACA),
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  initialCountryCode: 'FR',
+                                  onCountryChanged: (phone) {
+                                    // Clear the phone number field when the country changes
+                                    _phoneNumberController.text = '';
+                                  },
+                                  onChanged: (phone) {
+                                    // Store the complete phone number
+                                    completePhoneNumber = phone.completeNumber;
+                                    print(
+                                        "compleeeete ${phone.countryISOCode}");
+                                  },
                                 ),
                               ],
                             ),
