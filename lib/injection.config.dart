@@ -21,6 +21,24 @@ import 'package:shipnexusapp/core/network/interceptor/HttpInterceptor.dart'
     as _i939;
 import 'package:shipnexusapp/core/network/network_info.dart' as _i258;
 import 'package:shipnexusapp/core/utils/pref_utils.dart' as _i615;
+import 'package:shipnexusapp/features/auth/data/datasources/auth_remote_data_source.dart'
+    as _i432;
+import 'package:shipnexusapp/features/manage_user_feature/data/data_sources/locale/AppDatabase.dart'
+    as _i217;
+import 'package:shipnexusapp/features/manage_user_feature/data/data_sources/locale/manage_user_locale_data_source.dart'
+    as _i142;
+import 'package:shipnexusapp/features/manage_user_feature/data/data_sources/remote/manage_user_remote_data_source.dart'
+    as _i67;
+import 'package:shipnexusapp/features/manage_user_feature/data/repositories/manage_user_repository_impl.dart'
+    as _i904;
+import 'package:shipnexusapp/features/manage_user_feature/domain/repositories/manage_user_repository.dart'
+    as _i201;
+import 'package:shipnexusapp/features/manage_user_feature/domain/use_cases/cache_user.dart'
+    as _i340;
+import 'package:shipnexusapp/features/manage_user_feature/domain/use_cases/get_cached_user.dart'
+    as _i696;
+import 'package:shipnexusapp/features/manage_user_feature/domain/use_cases/get_remote_user.dart'
+    as _i574;
 import 'package:shipnexusapp/features/map_feature/data/data_sources/map_remote_data_source.dart'
     as _i1005;
 import 'package:shipnexusapp/features/map_feature/data/repositories/map_repository_impl.dart'
@@ -58,16 +76,31 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i85.AuthenticatedHttpClient>(() =>
         _i85.AuthenticatedHttpClient(
             sharedPref: gh<_i460.SharedPreferences>()));
+    gh.factory<_i142.ManageUserLocaleDataSource>(() =>
+        _i142.ManageUserLocaleDataSourceImpl(
+            appDatabase: gh<_i217.AppDatabase>()));
     gh.factory<_i615.PrefUtils>(() => _i615.PrefUtilsImpl(
           sharedPreferences: gh<_i460.SharedPreferences>(),
           httpClientInterceptor: gh<_i85.AuthenticatedHttpClient>(),
         ));
     gh.factory<_i939.HttpInterceptor>(() => _i939.HttpInterceptorImpl(
         httpClient: gh<_i85.AuthenticatedHttpClient>()));
+    gh.factory<_i432.AuthRemoteDataSource>(() => _i432.AuthRemoteDataSourceImpl(
+          httpClient: gh<_i939.HttpInterceptor>(),
+          prefUtils: gh<_i615.PrefUtils>(),
+        ));
+    gh.factory<_i67.ManageUserRemoteDataSource>(() =>
+        _i67.ManageUserRemoteDataSourceImpl(
+            httpClient: gh<_i939.HttpInterceptor>()));
     gh.factory<_i1005.MapRemoteDataSource>(() => _i1005.MapRemoteDataSourceImpl(
         httpClient: gh<_i939.HttpInterceptor>()));
     gh.factory<_i391.MapRepository>(() => _i660.MapRepositoryImpl(
           mapRemoteDataSource: gh<_i1005.MapRemoteDataSource>(),
+          networkInfo: gh<_i258.NetworkInfo>(),
+        ));
+    gh.factory<_i201.ManageUserRepository>(() => _i904.ManageUserRepositoryImpl(
+          manageUserRemoteDataSource: gh<_i67.ManageUserRemoteDataSource>(),
+          manageUserLocaleDataSource: gh<_i142.ManageUserLocaleDataSource>(),
           networkInfo: gh<_i258.NetworkInfo>(),
         ));
     gh.factory<_i245.GetAutoCompleteUseCase>(() =>
@@ -81,6 +114,12 @@ extension GetItInjectableX on _i174.GetIt {
           getAutoCompleteUseCase: gh<_i245.GetAutoCompleteUseCase>(),
           getPlaceUseCase: gh<_i237.GetPlaceUseCase>(),
         ));
+    gh.factory<_i574.GetRemoteUserUseCase>(() => _i574.GetRemoteUserUseCase(
+        manageUserRepository: gh<_i201.ManageUserRepository>()));
+    gh.factory<_i696.GetCachedUserUseCase>(() => _i696.GetCachedUserUseCase(
+        manageUserRepository: gh<_i201.ManageUserRepository>()));
+    gh.factory<_i340.CacheUserUseCase>(() => _i340.CacheUserUseCase(
+        manageUserRepository: gh<_i201.ManageUserRepository>()));
     return this;
   }
 }

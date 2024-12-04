@@ -1,0 +1,3 @@
+// Dev...
+const BASE_URL = "https://devlinkfootapi.softylines.com/api/v1/";
+const MEDIA_URL = "https://devlinkfootapi.softylines.com/";

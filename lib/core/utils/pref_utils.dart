@@ -8,34 +8,20 @@ abstract class PrefUtils {
 
   String? getRefreshToken();
 
-  Object? getArguments();
-  void setArguments(Object arguments);
-
   void setToken(String token);
 
   void setRefreshToken(String refreshToken);
 
   void setUserId(String userId);
 
-  void setUserRole(String userId);
   void setUserName(String userName);
   String getUserName();
-
-  void setIdUserRole(String userId);
-
-  void registerTryout(String newTryout);
 
   void setNotificationsCounter(int counter);
 
   int? getNotificationsCounter();
 
-  bool checkAndDeleteTryout(String searchTryout);
-
   String? getUserId();
-
-  String? getUserRole();
-
-  String? getIdUserRole();
 
   void clear();
 
@@ -45,7 +31,6 @@ abstract class PrefUtils {
   void setUserProfilePic(String profilePic);
   String getUserProfilePic();
   void clearAllCache();
-
 }
 
 @Injectable(as: PrefUtils)
@@ -82,7 +67,6 @@ class PrefUtilsImpl implements PrefUtils {
     sharedPreferences.remove("token");
     sharedPreferences.remove("refreshToken");
     sharedPreferences.remove("userId");
-    sharedPreferences.remove("userRole");
   }
 
   @override
@@ -106,11 +90,6 @@ class PrefUtilsImpl implements PrefUtils {
   }
 
   @override
-  void setUserRole(String userRole) {
-    sharedPreferences.setString("userRole", userRole);
-  }
-
-  @override
   void setUserName(String userName) {
     sharedPreferences.setString("userName", userName);
   }
@@ -121,63 +100,15 @@ class PrefUtilsImpl implements PrefUtils {
   }
 
   @override
-  void setIdUserRole(String userRole) {
-    sharedPreferences.setString("idUserRole", userRole);
-  }
-
-  @override
-  void registerTryout(String newTryout) {
-    List<String>? existingStrings =
-        sharedPreferences.getStringList('my_tryout_join_requests') ?? [];
-    existingStrings.add(newTryout);
-    sharedPreferences.setStringList('my_tryout_join_requests', existingStrings);
-  }
-
-  @override
   void setNotificationsCounter(int counter) {
     sharedPreferences.setString(
         "user_notifications_counter", counter.toString());
   }
 
   @override
-  bool checkAndDeleteTryout(String searchTryout) {
-    List<String>? existingStrings =
-        sharedPreferences.getStringList('my_tryout_join_requests') ?? [];
-    if (existingStrings.contains(searchTryout)) {
-      existingStrings.remove(searchTryout);
-      sharedPreferences.setStringList(
-          'my_tryout_join_requests', existingStrings);
-      return true;
-    }
-    return false;
-  }
-
-  @override
-  String? getUserRole() {
-    return sharedPreferences.getString("userRole");
-  }
-
-  @override
   int? getNotificationsCounter() {
     return int.parse(
         sharedPreferences.getString("user_notifications_counter") ?? '0');
-  }
-
-  @override
-  String? getIdUserRole() {
-    return sharedPreferences.getString("idUserRole");
-  }
-
-  @override
-  Object? getArguments() {
-    String? argumentsString = sharedPreferences.getString("arguments");
-    return int.parse(argumentsString!);
-  }
-
-  @override
-  void setArguments(Object arguments) {
-    sharedPreferences.setString("arguments", arguments.toString());
-
   }
 
   @override
