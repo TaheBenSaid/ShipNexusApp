@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shipnexusapp/injection.dart';
 
 import 'core/app_theme.dart';
+import 'features/auth/presentation/pages/confirmation_code_screen.dart';
+import 'features/auth/presentation/pages/forgot_password_screen.dart';
+import 'features/auth/presentation/pages/new_password_screen.dart';
 import 'features/auth/presentation/pages/second_signup_screen.dart';
 import 'features/auth/presentation/pages/signup_screen.dart';
 
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
          theme: appTheme,
-        home: SecondSignUpScreen(),
+        home: NewPasswordScreen(),
       ),
     );
   }

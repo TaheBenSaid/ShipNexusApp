@@ -6,6 +6,8 @@ import 'package:shipnexusapp/core/ui/colors/colors.dart';
 
 import '../../../../core/ui/custom_text_field.dart';
 import '../../../../core/validations/input_validations.dart';
+import '../widgets/custom_back_button.dart';
+import 'forgot_password_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -40,33 +42,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   height: 65.h,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      const Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Text(
-                        'Sign in',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.sp,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
-                    ],
-                  ),
+                CustomBackButton(
+                  text: 'Sign In',
                 ),
                 SizedBox(
                   height: 15.h,
@@ -175,12 +152,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         // forgot password...
                         InkWell(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => ForgotPasswordScreen(),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ),
+                            );
                           },
                           child: Text(
                             'Forgot your password ?',
