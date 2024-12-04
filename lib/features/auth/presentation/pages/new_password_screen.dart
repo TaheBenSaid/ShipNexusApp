@@ -1,32 +1,26 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:shipnexusapp/core/ui/colors/colors.dart';
 import 'package:shipnexusapp/features/auth/presentation/pages/signin_screen.dart';
 
 import '../../../../core/validations/input_validations.dart';
-import '../../../../core/widgets/map_input.dart';
 import '../widgets/custom_back_button.dart';
 import '../widgets/refactored_intl_phone_field.dart';
 
-class SecondSignUpScreen extends StatefulWidget {
-  const SecondSignUpScreen({Key? key}) : super(key: key);
+class NewPasswordScreen extends StatefulWidget {
+  const NewPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<SecondSignUpScreen> createState() => _SecondSignUpScreenState();
+  State<NewPasswordScreen> createState() => _NewPasswordScreenState();
 }
 
-class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
+class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneNumberController = TextEditingController();
   String completePhoneNumber = ''; // New variable for complete phone number
-  final TextEditingController locationController = TextEditingController();
-
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +43,7 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                   height: 65.h,
                 ),
                 CustomBackButton(
-                  text: 'Sign Up',
+                  text: 'Forgot Password',
                 ),
                 SizedBox(
                   height: 15.h,
@@ -84,39 +78,38 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                               children: [
                                 Column(
                                   children: [
-                                    Center(
-                                      child: Image.asset(
-                                        'assets/images/app_logo_blue.png',
-                                        width: 283.w,
-                                        height: 189.h,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'Welcome to us,',
-                                          style: TextStyle(
-                                            color: Color(0xFF9BCCF3),
-                                            fontSize: 24.sp,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                        SizedBox(
+                                          height: 75.h,
                                         ),
                                         Text(
-                                          'continue with creating New account',
+                                          'Forgot password',
                                           style: TextStyle(
                                             color: Color(0xFF333333),
-                                            fontSize: 12.sp,
+                                            fontSize: 20.sp,
                                             fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w600,
+                                            height: 0.07,
                                           ),
                                         ),
                                         SizedBox(
-                                          height: 25.h,
+                                          height: 20.h,
+                                        ),
+                                        Text(
+                                          'Type your phone number ',
+                                          style: TextStyle(
+                                            color: Color(0xFF979797),
+                                            fontSize: 12.sp,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w600,
+                                            height: 0.11,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 33.h,
                                         )
                                       ],
                                     ),
@@ -129,18 +122,6 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                               key: _formKey,
                               child: Column(
                                 children: [
-                                  // Location Text Field...
-                                  MapInput(
-                                    initialLatitude: 0.0,
-                                    initialLongitude: 0.0,
-                                    updateLocation: (locationName, lat, lng) {
-                                      setState(() {
-                                        // update the user location...
-                                        locationController.text = locationName;
-                                      });
-                                    },
-                                    locationController: locationController,
-                                  ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
@@ -226,7 +207,8 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                                     },
                                     onChanged: (phone) {
                                       // Store the complete phone number
-                                      completePhoneNumber = phone.completeNumber;
+                                      completePhoneNumber =
+                                          phone.completeNumber;
                                       print(
                                           "compleeeete ${phone.countryISOCode}");
                                     },
@@ -235,75 +217,43 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 20.h,
+                              height: 15.h,
                             ),
-                            // Checkbox and text...
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _isChecked = !_isChecked;
-                                    });
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(right: 5.w),
-                                    width: 24.w,
-                                    height: 24.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: _isChecked
-                                            ? const Color(0xFF3629B6)
-                                            : const Color(0xFFCACACA),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: _isChecked
-                                        ? const Icon(
-                                            Icons.check,
-                                            color: Color(0xFF3629B6),
-                                            size: 16,
-                                          )
-                                        : null,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 12.w,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    text:
-                                        'By creating an account you agree \n to our ',
+
+                            Container(
+                              margin: EdgeInsets.only(left: 20.w),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'We texted you a code to verify your ',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
                                       fontSize: 14.sp,
                                       fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.11,
                                     ),
-                                    children: [
-                                      TextSpan(
-                                        text: 'Terms and Conditions',
-                                        style: TextStyle(
-                                          color: Color(0xFF3629B6),
-                                          fontSize: 14.sp,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w600,
-                                          height: 0.08,
-                                        ),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            // Navigate to the terms and conditions page
-                                          },
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  Text(
+                                    'phone number',
+                                    style: TextStyle(
+                                      color: Color(0xFF333333),
+                                      fontSize: 14.sp,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0.11,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(
-                              height: 22.h,
+                              height: 25.h,
                             ),
                             // Sign Up Button...
                             InkWell(
@@ -330,7 +280,7 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                                   ),
                                 ),
                                 child: Text(
-                                  'Sign Up',
+                                  'Send',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17.92.sp,
@@ -339,84 +289,6 @@ class _SecondSignUpScreenState extends State<SecondSignUpScreen> {
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Center(
-                              child: Text(
-                                'or sign Up with',
-                                style: TextStyle(
-                                  color: const Color(0xFF888888),
-                                  fontSize: 16.sp,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: 86.w,
-                                  height: 42.h,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: ShapeDecoration(
-                                    color: Color(0xFFF4F4F4),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)),
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/google.svg',
-                                    width: 27.w,
-                                    height: 27.h,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: 86.w,
-                                  height: 42.h,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: ShapeDecoration(
-                                    color: Color(0xFFF4F4F4),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)),
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/facebook.svg',
-                                    width: 27.w,
-                                    height: 27.h,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                Container(
-                                  width: 86.w,
-                                  height: 42.h,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: ShapeDecoration(
-                                    color: const Color(0xFFF4F4F4),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)),
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/apple.svg',
-                                    width: 27.w,
-                                    height: 27.h,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
                             ),
                             SizedBox(
                               height: 20.h,

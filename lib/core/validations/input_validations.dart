@@ -114,3 +114,17 @@ String? validatePhoneNumber(PhoneNumber value, BuildContext context) {
   }
   return null;
 }
+
+// confiramtion code validation
+String? validateConfirmationCode(String value, BuildContext context) {
+  if (value.isEmpty) {
+    return "Confirmation code can't be blank";
+  }
+  if (value.length < 6) {
+    return "Confirmation code is too short!";
+  }
+  if (value.length > 6) {
+    return "Confirmation code is too long!";
+  }
+  return null;
+}
