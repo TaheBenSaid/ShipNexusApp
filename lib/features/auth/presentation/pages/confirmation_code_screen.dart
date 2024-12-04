@@ -23,8 +23,6 @@ class _ConfirmationCodeScreenState extends State<ConfirmationCodeScreen> {
   final TextEditingController _confirmationCodeController =
       TextEditingController();
 
-  bool _isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
