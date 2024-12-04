@@ -1,5 +1,6 @@
 // This function is used to validate the password in the login page...
 import 'package:flutter/cupertino.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 String? validateField(String value, hintText, BuildContext context) {
   // Check if the input value is empty or consists only of whitespace characters.
@@ -97,6 +98,33 @@ String? validateEmail(String? value, BuildContext context) {
 String? validateEmptyField(String value, hintText, BuildContext context) {
   if (value.trim().isEmpty) {
     return "$hintText ${"can't be blank"}";
+  }
+  return null;
+}
+
+
+String? validatePhoneNumber(PhoneNumber value, BuildContext context) {
+  print("dsqdqsqsdqsd $value");
+  String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+  RegExp regExp = RegExp(patttern);
+  if (value.number.isEmpty) {
+    return 'Please enter mobile number';
+  } else if (!regExp.hasMatch(value.number)) {
+    return 'Please enter valid mobile number';
+  }
+  return null;
+}
+
+// confiramtion code validation
+String? validateConfirmationCode(String value, BuildContext context) {
+  if (value.isEmpty) {
+    return "Confirmation code can't be blank";
+  }
+  if (value.length < 6) {
+    return "Confirmation code is too short!";
+  }
+  if (value.length > 6) {
+    return "Confirmation code is too long!";
   }
   return null;
 }

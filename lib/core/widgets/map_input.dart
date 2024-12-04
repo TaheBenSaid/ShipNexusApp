@@ -10,14 +10,14 @@ import '../validations/input_validations.dart';
 
 class MapInput extends StatefulWidget {
   final Function(String, double, double) updateLocation;
-  final TextEditingController stadiumController;
+  final TextEditingController locationController;
   double? initialLatitude;
   double? initialLongitude;
 
   MapInput({
     Key? key,
     required this.updateLocation,
-    required this.stadiumController,
+    required this.locationController,
     this.initialLatitude,
     this.initialLongitude
   }) : super(key: key);
@@ -49,7 +49,7 @@ class _MapInputState extends State<MapInput> {
       },
       child: TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        controller: widget.stadiumController,
+        controller: widget.locationController,
         readOnly: true,
         style: TextStyle(
           fontSize: 14.sp,
@@ -60,19 +60,19 @@ class _MapInputState extends State<MapInput> {
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(ScreenUtil().radius(12)),
             borderSide: const BorderSide(
-              color: Colors.white,
+              color: Color(0xFFCACACA),
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(ScreenUtil().radius(12)),
             borderSide: const BorderSide(
-              color: Colors.white,
+              color: Color(0xFFCACACA),
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(ScreenUtil().radius(12)),
             borderSide: const BorderSide(
-              color: Colors.white,
+              color: Color(0xFFCACACA),
             ),
           ),
           isDense: true,
@@ -91,23 +91,23 @@ class _MapInputState extends State<MapInput> {
           ),
           contentPadding:
           EdgeInsets.symmetric(vertical: 16.h, horizontal: 11.w),
-          hintText: 'Match Stadium',
+          hintText: 'Click the pin for your  location',
           hintStyle: TextStyle(
             color:
-            Color(0xFF7D8485),
+            Color(0xFFC9C9C9),
             fontSize: 14.sp,
             fontFamily: 'Outfit',
             fontWeight: FontWeight.w400,
           ),
           filled: true,
-          fillColor: const Color(0x0C212C2D),
+          fillColor: Colors.white,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(ScreenUtil().radius(12)),
               borderSide:
               // widget.isRegister
               //     ?
               BorderSide(
-                color: Colors.white,
+                color: Color(0xFFCACACA),
               )
             // : BorderSide.none,
           ),

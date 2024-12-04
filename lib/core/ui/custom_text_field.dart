@@ -55,7 +55,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: widget.controller,
         validator: widget.validator,
-        cursorColor: widget.textColor ?? Colors.white,
+        cursorColor: widget.textColor ?? Colors.black,
         obscureText: widget.isPassword ? _obscureText : false,
         inputFormatters: widget.isNumeric
             ? [CustomPhoneNumberFormatter()]
@@ -91,7 +91,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderRadius: BorderRadius.circular(15),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Color(0xFFE2E8E7)),
+            borderSide: BorderSide(width: 1, color: Color(0xFFCACACA)),
             borderRadius: BorderRadius.circular(15),
           ),
           enabledBorder: OutlineInputBorder(
